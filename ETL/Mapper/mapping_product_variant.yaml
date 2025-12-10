@@ -1,0 +1,11 @@
+source: magento
+target: medusa
+entity: variant
+
+fields:
+  title: title
+  sku: sku
+  price: prices
+  #thumbnail: thumbnail
+  options: options
+  #quantity: amount

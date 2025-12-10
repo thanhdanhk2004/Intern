@@ -1,0 +1,8 @@
+{
+  "magento_url" : "https://magento.test",
+  "medusa_url": "http://localhost:9000",
+  "username_magento": "thanhdan",
+  "password_magento": "quenmatroi2004",
+  "email_medusa": "admin@axample.com",
+  "password_medusa": "admin123"
+}

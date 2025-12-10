@@ -1,0 +1,8 @@
+source: magento
+target: medusa
+entity: customer
+
+fields:
+  firstname: first_name
+  lastname: last_name
+  email: email

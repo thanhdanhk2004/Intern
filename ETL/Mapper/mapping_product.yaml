@@ -1,0 +1,19 @@
+source: magento
+target: medusa
+entity: product
+
+fields:
+  id: id
+  title: name
+  sku: sku
+  created_at: created_at
+  updated_at: updated_at
+  description: description
+  type_id: type_id
+  categories: category_links
+  thumbnail: file
+  status: status
+  product_variant: configurable_product_links
+  options: options
+  price: price
+  quantity: qty

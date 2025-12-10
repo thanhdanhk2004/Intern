@@ -1,0 +1,10 @@
+source: mapping_product
+target: database_medusa
+entity: product
+
+fields:
+  title: title
+  description: description
+  status: status
+  thumbnail: thumbnail
+  options: options

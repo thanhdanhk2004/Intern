@@ -1,0 +1,9 @@
+source: magento
+target: medusa
+entity: category
+
+fields:
+  name: name
+  handle: name
+  rank: position
+  is_active: include_in_menu
