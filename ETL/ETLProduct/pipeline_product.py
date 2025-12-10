@@ -79,7 +79,7 @@ class PipelineProduct:
                 self.array_products.append(data)
                 continue
             elif data['type_id'] == 'configurable':
-                data_product_medusa = self.mapping.map_field_product_medusa(data, mapper_product_medusa)
+                data_product_medusa = self.mapping.map_field_product_medusa(data, mapper_product_medusa, self.etl_tag_id)
                 product =  self.add_product(data_product_medusa)
                 pipeline_category = PipelineCategory(self.token_medusa, self.token_magento, data['categories'])
                 pipeline_category.add_category(self.array_categories_existed)

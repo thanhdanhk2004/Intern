@@ -1,7 +1,7 @@
 import re
 
 class Transformer:
-    url_image = "https://localhost/pub/media/catalog/product/"
+    url_image = "http://magento.local/media/catalog/product/"
 
     def clean_html(self, product):
         if product.get("description"):

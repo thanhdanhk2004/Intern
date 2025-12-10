@@ -15,6 +15,7 @@ class MappingCategory:
             else:
                 value = category_data[src_field]
             target_data[target_filed] = value
+        target_data["metadata"] = {"etl_migration": True}
         return target_data
 
     
