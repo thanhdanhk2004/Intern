@@ -8,6 +8,7 @@ from DataExtractLayer.Customer import CustomerMagento
 from MedusaDataExtractLayer.Customer import CustomerMedusa
 from MedusaDataExtractLayer.CustomerGroup import CustomerGroupMedusa
 from MedusaDataExtractLayer.Address import CustomerAddressMedusa
+from MedusaDataExtractLayer.User import UserMedusa
 
 with open("Mapper/mapping_customer.yaml") as f:
     mapper_customer = yaml.safe_load(f)
@@ -78,6 +79,10 @@ class PipelineCustomer:
                         if customer_address_mapping:
                             response_add_customer_address = self.customer_address_medusa._request_add_customer_address(response_add_customer["customer"]["id"], customer_address_mapping)
 
+                    user_medusa = UserMedusa(self.url_medusa, self.token_medusa)
+                    response_add_user = user_medusa._request_add_user(customer_medusa_mapping["email"])
+                    if response_add_user:
+                        response_reset_password = user_medusa._request_reset_password(customer_medusa_mapping["email"])
 
 
 

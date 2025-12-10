@@ -1,7 +1,7 @@
 import requests
 import time
 
-class CustomerMedusa:
+class UserMedusa:
     def __init__(self, base_url, token, retry=5, time_out=60):
         self.base_url = base_url
         self.token = token
@@ -15,14 +15,14 @@ class CustomerMedusa:
         })
 
 
-    def _request_add_user(self, email, password):
-        if email is None or password is None:
+    def _request_add_user(self, email):
+        if email is None:
             return
 
         url = f"{self.base_url}/auth/user/emailpass/register"
         user = {
             "email": email,
-            "password": password
+            "password": "password"
         }
         for i in range(self.retry):
 
@@ -43,10 +43,13 @@ class CustomerMedusa:
         if email is None:
             return
 
+        body = {
+            "identifier": email
+        }
         url = f"{self.base_url}/auth/user/emailpass/reset-password"
         for i in range(self.retry):
 
-            response = self.session.post(url, json=email, timeout=self.time_out)
+            response = self.session.post(url, json=body, timeout=self.time_out)
 
             if response.status_code == 429:
                 print("Please wait")
@@ -54,7 +57,8 @@ class CustomerMedusa:
                 continue
 
             if response.status_code != 200:
-                raise Exception(f"Add user failed: {response.status_code}: f{response.text}")
+                if  response.status_code != 201:
+                    raise Exception(f"Reset password failed: {response.status_code}: f{response.text}")
 
             return response.json()
-        raise Exception("Add user failed")
+        raise Exception("Reset password failed")
