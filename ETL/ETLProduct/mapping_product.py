@@ -71,7 +71,7 @@ class Mapping:
             target_data[src_field] = value
         return target_data
 
-    def map_field_product_medusa(self, data, mapper):
+    def map_field_product_medusa(self, data, mapper, tag_id):
         target_data = {}
         for src_field, target_field in mapper['fields'].items():
             value = data[target_field]
@@ -80,5 +80,6 @@ class Mapping:
             target_data["status"]= "published"
         else:
             target_data["status"] = "draft"
+        target_data["tags"] = [{"id": tag_id}]
         return target_data
 

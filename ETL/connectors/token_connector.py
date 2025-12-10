@@ -5,7 +5,7 @@ with open("key.json", "r") as f:
     config = json.load(f)
 
 def get_token_magento():
-    url = f"{config['magento_url']}/rest/default/V1/integration/admin/token"
+    url = f"{config['magento_url']}/rest/V1/integration/admin/token"
     payload = {
         "username": config["username_magento"],
         "password": config["password_magento"]
