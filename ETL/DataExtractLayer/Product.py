@@ -44,3 +44,7 @@ class ProductMagento:
         endpoint = f"products/{sku}"
         return self._request(endpoint)
 
+    def get_children(self, sku): #CAMTU
+        endpoint = f"configurable-products/{sku}/children"
+        return self._request(endpoint)
+

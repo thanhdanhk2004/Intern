@@ -46,7 +46,6 @@ def ensure_etl_tag(token_medusa, base_url):
 
     return tag_id
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     token_magento = token_connector.get_token_magento()
     token_medusa = token_connector.get_token_medusa()
