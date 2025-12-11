@@ -3,9 +3,14 @@ from ETLProduct.validator import  Validate
 from ETLProduct.mapping_product import Mapping
 from ETLCategory.pipeline_category import PipelineCategory
 from  ETLProductVariant.pipeline_product_variant import PipelineProductVariant
+from ETL.DataExtractLayer.Product import ProductMagento
 import yaml
 import requests
 import time
+import json
+
+with open("key.json", "r") as f:
+    config = json.load(f)
 
 with open("Mapper/mapping_product.yaml") as f:
     mapper_product = yaml.safe_load(f)
@@ -71,6 +76,21 @@ class PipelineProduct:
 
     def add_products(self):
         for product in self.products["items"]:
+            if product["type_id"] == "configurable": #CAMTU
+                children = ProductMagento(config["magento_url"], self.token_magento).get_children(product["sku"])
+
+                # Fetch simple product and push vào array_products
+                for child in children:
+                    simple = ProductMagento(config["magento_url"], self.token_magento).get_product_by_sku(child["sku"])
+                    mapped = self.mapping.map_field_product(mapper_product, simple, self.token_magento)
+                    self.transform.transform_all(mapped)
+                    self.array_products.append(mapped)
+
+                # Đặt variant links theo ID hoặc SKU đều ok
+                product["extension_attributes"]["configurable_product_links"] = [
+                    c["id"] for c in children
+                ]
+
             data = self.mapping.map_field_product(mapper_product, product, self.token_magento)
             self.transform.transform_all(data)
             if self.validator.validate_product(data) == False:

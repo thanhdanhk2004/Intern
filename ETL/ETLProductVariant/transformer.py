@@ -1,7 +1,7 @@
 
 class TransformVariant:
 
-    url_image = "https://localhost/pub/media/catalog/product/"
+    url_image = "http://magento.local/media/catalog/product/"
 
     def transform_image(self, product_variant):
         if product_variant.get("thumbnail"):
