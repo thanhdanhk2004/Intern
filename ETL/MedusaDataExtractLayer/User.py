@@ -33,10 +33,17 @@ class UserMedusa:
                 time.sleep(1)
                 continue
 
-            if response.status_code != 200:
-                raise Exception(f"Add user failed: {response.status_code}: f{response.text}")
+            if response.status_code in (200, 201):
+                try:
+                    return response.json()
+                except ValueError:
+                    return {
+                        "success": True,
+                        "status": response.status_code,
+                        "message": response.text
+                    }
 
-            return response.json()
+            raise Exception(f"Add user failed: {response.status_code}: f{response.text}")
         raise Exception("Add user failed")
 
     def _request_reset_password(self, email):
@@ -56,9 +63,11 @@ class UserMedusa:
                 time.sleep(1)
                 continue
 
-            if response.status_code != 200:
-                if  response.status_code != 201:
-                    raise Exception(f"Reset password failed: {response.status_code}: f{response.text}")
-
-            return response.json()
+            if response.status_code in (200, 201, 204):
+                return {
+                    "success": True,
+                    "status": response.status_code,
+                    "message": response.text
+                }
+            raise Exception(f"Reset password failed: {response.status_code}: f{response.text}")
         raise Exception("Reset password failed")

@@ -8,6 +8,7 @@ from ETLProduct.pipeline_product import PipelineProduct
 from ETLCustomer.pipeline_customer import PipelineCustomer
 from ETLCleaner.clear_products import CleanupProducts
 from ETLCleaner.clear_categories import CleanupCategories
+from ETLCleaner.clean_customers import CleanupCustomerData
 import requests
 import json
 
@@ -59,12 +60,16 @@ if __name__ == '__main__':
     # pipeline_product.add_products()
 
     # XOA PRODUCTS CATEGORIES
-    cleanupProducts = CleanupProducts(token_medusa, config["medusa_url"])
-    cleanupProducts.clear_products()
-    cleanupCategories = CleanupCategories(token_medusa, config["medusa_url"])
-    cleanupCategories.clear_categories()
+    # cleanupProducts = CleanupProducts(token_medusa, config["medusa_url"])
+    # cleanupProducts.clear_products()
+    # cleanupCategories = CleanupCategories(token_medusa, config["medusa_url"])
+    # cleanupCategories.clear_categories()
 
-    # THEM CUSTOMER
-    # pipeline_customer = PipelineCustomer(token_medusa, toke_magento, config["magento_url"], config["medusa_url"])
-    # pipeline_customer.add_customer_to_medusa()
+    # THEM CUSTOMERS
+    pipeline_customer = PipelineCustomer(token_medusa, token_magento, config["magento_url"], config["medusa_url"])
+    pipeline_customer.add_customer_to_medusa()
+
+    # XOA CUSTOMERS
+    # cleanupCustomers = CleanupCustomerData(config["medusa_url"], token_medusa)
+    # cleanupCustomers.clear_all()
 
