@@ -27,8 +27,18 @@ class PipelineProductVariant:
             product_variant_magento = self.get_product_variant_from_array(variant_id)
             if product_variant_magento is None:
                 continue
-            product_variant_medusa = self.mapping_product_variant.mapping_variant(product_variant_magento, product_parent, option_id, mapper, product)
-            if self.validate_variant.validate_variant(product_variant_medusa) == False:
+            # product_variant_medusa = self.mapping_product_variant.mapping_variant(product_variant_magento, product_parent, option_id, mapper, product)
+            # if self.validate_variant.validate_variant(product_variant_medusa) == False:
+            #     continue
+            # data = self.medusa_product_variant._request_add_product_variant(product_id, product_variant_medusa)
+            # print(data)
+            variant, internal_thumb = self.mapping_product_variant.mapping_variant( #CAMTU
+                product_variant_magento, product_parent, option_id, mapper, product
+            )
+            if variant is None:
                 continue
-            data = self.medusa_product_variant._request_add_product_variant(product_id, product_variant_medusa)
-            print(data)
+            # validate chỉ cho Medusa payload
+            if not self.validate_variant.validate_variant(variant):
+                continue
+            res = self.medusa_product_variant._request_add_product_variant(product_id, variant)
+            print(res)

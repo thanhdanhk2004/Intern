@@ -20,7 +20,8 @@ class Mapping:
             if custom_attribute["attribute_code"].lower() == "size" or custom_attribute["attribute_code"].lower() == "color":
                 arr_value_variant_for_simple.append({
                     "title": custom_attribute["attribute_code"].lower(),
-                    "value":custom_attribute["value"]})
+                    # "value":custom_attribute["value"]})
+                    "value": str(custom_attribute["value"])}) #CAMTU
         return arr_value_variant_for_simple
 
     def map_field_option(self, product, mapper, token):
@@ -30,9 +31,22 @@ class Mapping:
             data_option = option_magento.get_option(option["attribute_id"])
             if data_option is None:
                 continue
-            option_medusa = {}
-            option_medusa["title"] = data_option["attribute_code"].lower()
-            option_medusa["values"], option_medusa["value_magento"] = self.get_lable_option(data_option["options"])
+            # option_medusa = {}
+            # option_medusa["title"] = data_option["attribute_code"].lower()
+            # option_medusa["values"], option_medusa["value_magento"] = self.get_lable_option(data_option["options"])
+            usable_values = option["values"]  # CAMTU
+            filtered_labels = []
+            filtered_values = []
+            for value in usable_values:
+                for option in data_option["options"]:
+                    if option["value"] == str(value["value_index"]):
+                        filtered_labels.append(option["label"])
+                        filtered_values.append(option["value"])
+            option_medusa = {
+                "title": data_option["attribute_code"].lower(),
+                "values": filtered_labels,
+                "value_magento": filtered_values
+            }
             data_options_medusa.append(option_medusa)
         return data_options_medusa
 
