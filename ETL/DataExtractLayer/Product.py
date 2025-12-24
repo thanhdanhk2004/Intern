@@ -34,8 +34,6 @@ class ProductMagento:
             return response.json()
         raise Exception("Request failed after retries")
 
-
-
     def get_products(self, page_size=10, current_page=1):
         endpoint = f"products?searchCriteria[pageSize]={page_size}&searchCriteria[currentPage]={current_page}"
         return self._request(endpoint)

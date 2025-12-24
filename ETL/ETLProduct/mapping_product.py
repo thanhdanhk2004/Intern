@@ -55,7 +55,6 @@ class Mapping:
         data_product = product_magento.get_product_by_sku(sku)
         return data_product["extension_attributes"]["stock_item"][field]
 
-
     def map_field_product(self, mapper, product, token):
         target_data = {}
         value = None

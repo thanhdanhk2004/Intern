@@ -1,0 +1,22 @@
+source: magento
+target: canonical
+entity: order
+
+fields:
+  id: entity_id
+  status: status
+  created_at: created_at
+  updated_at: updated_at
+
+  customer_id: customer_id
+  customer_email: customer_email
+
+  line_items: items
+
+  subtotal: subtotal
+  tax: tax_amount
+  shipping_fee: shipping_amount
+  total: grand_total
+
+  payment: payment
+  currency: base_currency_code
