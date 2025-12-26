@@ -44,7 +44,6 @@ class PipelineProduct:
             "Content-Type": "application/json"
         })
 
-
     def add_product(self, data_product):
         if data_product is None:
             return
