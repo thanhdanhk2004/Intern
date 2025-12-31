@@ -1,5 +1,3 @@
-
-
 class MappingProductVariant:
 
     def get_option_value(self, product_parent_options, value_variant):
@@ -9,17 +7,16 @@ class MappingProductVariant:
                 return opt["title"].lower(), opt["values"][idx]
         return None
 
-
     def get_options_value_for_product_variant(self, product_parent_options, values_variant, option_ids, product):
         options = {}
         for value_variant in values_variant:
-            title, value =  self.get_option_value(product_parent_options, value_variant)
+            title, value = self.get_option_value(product_parent_options, value_variant)
             options[title] = value
         return options
 
     def get_price_for_product_variant(self, price):
         return {
-            "currency_code":"usd",
+            "currency_code": "usd",
             "amount": price
         }
 
@@ -43,11 +40,13 @@ class MappingProductVariant:
         #     variant[field_target] = value
         #
         # return variant
-        simple_opts = product_variant["options"] #CAMTU
+        simple_opts = product_variant["options"]  # CAMTU
         parent_opts = product_parent["options"]
         variant = {
             "title": "",
             "sku": product_variant["sku"],
+            "manage_inventory": True,
+            "allow_backorder": True,
             "options": {},
             "prices": [
                 {"currency_code": "usd", "amount": int(product_variant["price"])}
@@ -65,4 +64,3 @@ class MappingProductVariant:
             internal_thumbnail = "http://magento.local/media/catalog/product/" + product_variant["thumbnail"]
 
         return variant, internal_thumbnail
-

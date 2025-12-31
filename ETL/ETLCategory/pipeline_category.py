@@ -1,15 +1,15 @@
 import json
-import  yaml
-from  ETLCategory.mapping_category import  MappingCategory
+import yaml
+from ETLCategory.mapping_category import MappingCategory
 from ETLCategory.validator import ValidatorCategory
 from DataExtractLayer.Categories import CategoriesMagento
 from MedusaDataExtractLayer.Categories import MedusaCategory
-from  DataExtractLayer.ProductCategory import MedusaProductCategory
+from DataExtractLayer.ProductCategory import MedusaProductCategory
 
 with open("key.json", "r") as f:
     config = json.load(f)
 
-with open("Mapper/mapping_category.yaml" ) as f:
+with open("Mapper/mapping_category.yaml") as f:
     mapper = yaml.safe_load(f)
 
 
@@ -60,7 +60,7 @@ class PipelineCategory:
                 return item["category_id_medusa"]
         return -1
 
-    def add_category_product(self, product,array_existed_categories):
+    def add_category_product(self, product, array_existed_categories):
         for category in self.categories:
             category_id_in_medusa = self.get_category_id_in_array(array_existed_categories, category["category_id"])
             if category_id_in_medusa == -1:

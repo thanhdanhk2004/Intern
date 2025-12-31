@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class CustomerGroupMedusa:
     def __init__(self, base_url, token, retry=5, time_out=60):
         self.base_url = base_url
@@ -13,7 +14,6 @@ class CustomerGroupMedusa:
             "Authorization": f"Bearer {self.token}",
             "Content-Type": "application/json"
         })
-
 
     def _request_add_customer_group(self, group_id, customer_id):
         if group_id is None or customer_id is None:

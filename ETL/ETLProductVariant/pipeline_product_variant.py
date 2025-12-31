@@ -1,7 +1,8 @@
 from ETLProductVariant.mapping_product_variant import MappingProductVariant
-from  ETLProductVariant.validator import ValidateVariant
+from ETLProductVariant.validator import ValidateVariant
 from ETLProductVariant.transformer import TransformVariant
 from DataExtractLayer.ProductVariant import MedusaProductVariant
+
 
 class PipelineProductVariant:
 
@@ -11,7 +12,6 @@ class PipelineProductVariant:
         self.validate_variant = ValidateVariant()
         self.transform_variant = TransformVariant()
         self.medusa_product_variant = MedusaProductVariant(base_url, token)
-
 
     def get_product_variant_from_array(self, variant_id):
         product_variant_magento = None
@@ -32,7 +32,7 @@ class PipelineProductVariant:
             #     continue
             # data = self.medusa_product_variant._request_add_product_variant(product_id, product_variant_medusa)
             # print(data)
-            variant, internal_thumb = self.mapping_product_variant.mapping_variant( #CAMTU
+            variant, internal_thumb = self.mapping_product_variant.mapping_variant(  # CAMTU
                 product_variant_magento, product_parent, option_id, mapper, product
             )
             if variant is None:

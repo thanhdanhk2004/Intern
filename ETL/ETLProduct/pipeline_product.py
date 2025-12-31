@@ -1,8 +1,8 @@
 from ETLProduct.transformer import Transformer
-from ETLProduct.validator import  Validate
+from ETLProduct.validator import Validate
 from ETLProduct.mapping_product import Mapping
 from ETLCategory.pipeline_category import PipelineCategory
-from  ETLProductVariant.pipeline_product_variant import PipelineProductVariant
+from ETLProductVariant.pipeline_product_variant import PipelineProductVariant
 from ETL.DataExtractLayer.Product import ProductMagento
 import yaml
 import requests
@@ -21,11 +21,11 @@ with open("Mapper/mapping_product_medusa.yaml") as f:
 with open("Mapper/mapping_product_variant.yaml") as f:
     mapper_product_variant = yaml.safe_load(f)
 
-class PipelineProduct:
 
+class PipelineProduct:
     array_categories_existed = []
 
-    def __init__(self, products, token_medusa,  token_magento, base_url, retry=30, time_out=3):
+    def __init__(self, products, token_medusa, token_magento, base_url, retry=30, time_out=3):
         self.products = products
         self.mapper_product = mapper_product
         self.base_url = base_url
@@ -48,21 +48,17 @@ class PipelineProduct:
         if data_product is None:
             return
         url = f"{self.base_url}/admin/products"
-
         for i in range(self.retry):
             response = self.session.post(url, json=data_product, timeout=self.time_out)
-
             if response.status_code == 429:
                 print("Please wait")
                 time.sleep(1)
                 continue
-
             if response.status_code >= 400:
-                raise Exception(f"Error {response.status_code}: {response.text}")
-
+                print(f"[PRODUCT ERROR] {response.status_code}: {response.text}")
+                return None
             return response.json()
         raise Exception("Failed")
-
 
     # Luong them: Product -> product_variant -> price_set -> product_variant_price_set -> price -> inventory_item -> product_variant_inventory_item -> inventory_level
     # Phải lấy được option ra nữa
@@ -75,7 +71,7 @@ class PipelineProduct:
 
     def add_products(self):
         for product in self.products["items"]:
-            if product["type_id"] == "configurable": #CAMTU
+            if product["type_id"] == "configurable":  # CAMTU
                 children = ProductMagento(config["magento_url"], self.token_magento).get_children(product["sku"])
 
                 # Fetch simple product and push vào array_products
@@ -98,13 +94,21 @@ class PipelineProduct:
                 self.array_products.append(data)
                 continue
             elif data['type_id'] == 'configurable':
-                data_product_medusa = self.mapping.map_field_product_medusa(data, mapper_product_medusa, self.etl_tag_id)
-                product =  self.add_product(data_product_medusa)
+                data_product_medusa = self.mapping.map_field_product_medusa(data, mapper_product_medusa,
+                                                                            self.etl_tag_id)
+                product = self.add_product(data_product_medusa)
+                if not product:
+                    print(f"[SKIP VARIANT] Product failed SKU={data.get('sku')}")
+                    continue
                 pipeline_category = PipelineCategory(self.token_medusa, self.token_magento, data['categories'])
                 pipeline_category.add_category(self.array_categories_existed)
                 pipeline_category.add_category_product(product, self.array_categories_existed)
                 product_variant_object = PipelineProductVariant(self.base_url, self.token_medusa, self.array_products)
 
-                data_product_variant_medusa = product_variant_object.add_product_variants(data, mapper_product_variant, product["product"]["id"],self.get_id_options(product["product"]["options"]), product)
+                data_product_variant_medusa = product_variant_object.add_product_variants(data, mapper_product_variant,
+                                                                                          product["product"]["id"],
+                                                                                          self.get_id_options(
+                                                                                              product["product"][
+                                                                                                  "options"]), product)
             else:
                 continue

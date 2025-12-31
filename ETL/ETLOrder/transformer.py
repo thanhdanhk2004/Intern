@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 
+
 class Transformer:
     def transform_money(self, order):
         money_fields = ["subtotal", "tax", "shipping_fee", "total"]

@@ -3,9 +3,9 @@ target: medusa
 entity: address
 
 fields:
-    street: address_name
-    city: city
-    firstname: first_name
-    lastname: last_name
-    postcode: postal_code
-    telephone: phone
+  street: address_name
+  city: city
+  firstname: first_name
+  lastname: last_name
+  postcode: postal_code
+  telephone: phone

@@ -1,6 +1,6 @@
-
 import requests
 import time
+
 
 class GroupMagento:
     def __init__(self, base_url, token, timeout=20, retry=3):

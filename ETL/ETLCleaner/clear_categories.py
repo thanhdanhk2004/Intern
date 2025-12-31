@@ -1,5 +1,6 @@
 import requests
 
+
 class CleanupCategories:
     def __init__(self, token_medusa, base_url):
         self.base_url = base_url

@@ -1,5 +1,5 @@
 {
-  "magento_url" : "http://magento.local",
+  "magento_url": "http://magento.local",
   "medusa_url": "http://localhost:9000",
   "username_magento": "admin",
   "password_magento": "Admin123",

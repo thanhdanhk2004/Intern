@@ -5,6 +5,7 @@ from DataExtractLayer.Product import ProductMagento
 with open("key.json", "r") as f:
     config = json.load(f)
 
+
 class Mapping:
     def get_lable_option(self, options):
         label_options = []
@@ -17,11 +18,12 @@ class Mapping:
     def get_value_variant_for_simple(self, product):
         arr_value_variant_for_simple = []
         for custom_attribute in product["custom_attributes"]:
-            if custom_attribute["attribute_code"].lower() == "size" or custom_attribute["attribute_code"].lower() == "color":
+            if custom_attribute["attribute_code"].lower() == "size" or custom_attribute[
+                "attribute_code"].lower() == "color":
                 arr_value_variant_for_simple.append({
                     "title": custom_attribute["attribute_code"].lower(),
                     # "value":custom_attribute["value"]})
-                    "value": str(custom_attribute["value"])}) #CAMTU
+                    "value": str(custom_attribute["value"])})  # CAMTU
         return arr_value_variant_for_simple
 
     def map_field_option(self, product, mapper, token):
@@ -71,7 +73,7 @@ class Mapping:
             elif src_field == "options" and product["type_id"] == 'configurable':
                 value = self.map_field_option(product, mapper, token)
             elif src_field == "quantity":
-                value = 10000 #self.map_field_quantity(product["sku"], token, target_field)
+                value = 10000  # self.map_field_quantity(product["sku"], token, target_field)
             else:
                 if src_field == 'product_variant':
                     continue
@@ -90,9 +92,8 @@ class Mapping:
             value = data[target_field]
             target_data[src_field] = value
         if target_data["status"] == 1:
-            target_data["status"]= "published"
+            target_data["status"] = "published"
         else:
             target_data["status"] = "draft"
         target_data["tags"] = [{"id": tag_id}]
         return target_data
-

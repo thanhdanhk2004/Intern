@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class CleanupCustomerData:
     def __init__(self, base_url, token_medusa, retry=5, timeout=5):
         self.base_url = base_url
@@ -29,7 +30,6 @@ class CleanupCustomerData:
             del_url = f"{self.base_url}/admin/customers/{customer_id}"
             for _ in range(self.retry):
                 d = self.session.delete(del_url)
-
                 if d.status_code == 200:
                     count += 1
                     break

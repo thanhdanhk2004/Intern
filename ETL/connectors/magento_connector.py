@@ -3,6 +3,7 @@ from http.client import responses
 import requests
 import time
 
+
 class MagentoConnector:
     def __init__(self, base_url, token, timeout=90, retry=3):
         self.base_url = base_url.rstrip("/")
@@ -12,10 +13,9 @@ class MagentoConnector:
 
         self.session = requests.Session()
         self.session.headers.update({
-            "Authorization":f"Bearer {self.token}",
+            "Authorization": f"Bearer {self.token}",
             "Content-Type": "application/json"
         })
-
 
     def _request(self, endpoint):
         url = f"{self.base_url}/rest/default/V1/{endpoint}"
@@ -34,8 +34,6 @@ class MagentoConnector:
             return response.json()
         raise Exception("Request failed after retries")
 
-
-
     def get_products(self, page_size=10, current_page=1):
         endpoint = f"products?searchCriteria[pageSize]={page_size}&searchCriteria[currentPage]={current_page}"
         return self._request(endpoint)
@@ -43,4 +41,3 @@ class MagentoConnector:
     def get_product_by_sku(self, sku):
         endpoint = f"products/{sku}"
         return self._request(endpoint)
-
