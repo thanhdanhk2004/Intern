@@ -3,6 +3,7 @@ from http.client import responses
 import requests
 import time
 
+
 class ProductMagento:
     def __init__(self, base_url, token, timeout=50, retry=3):
         self.base_url = base_url.rstrip("/")
@@ -12,10 +13,9 @@ class ProductMagento:
 
         self.session = requests.Session()
         self.session.headers.update({
-            "Authorization":f"Bearer {self.token}",
+            "Authorization": f"Bearer {self.token}",
             "Content-Type": "application/json"
         })
-
 
     def _request(self, endpoint):
         url = f"{self.base_url}/rest/default/V1/{endpoint}"
@@ -42,7 +42,6 @@ class ProductMagento:
         endpoint = f"products/{sku}"
         return self._request(endpoint)
 
-    def get_children(self, sku): #CAMTU
+    def get_children(self, sku):  # CAMTU
         endpoint = f"configurable-products/{sku}/children"
         return self._request(endpoint)
-

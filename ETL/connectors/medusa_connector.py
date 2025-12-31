@@ -1,6 +1,7 @@
 import time
 import requests
 
+
 class MedusaConnector:
     def __init__(self, base_url, token, time_out=20, retry=3):
         self.base_url = base_url
@@ -13,7 +14,6 @@ class MedusaConnector:
             "Content-Type": "application/json"
         })
 
-
     def get_data_product(self, magento_product):
         custom_attr = {attr["attribute_code"]: attr["value"] for attr in magento_product[0]["custom_attributes"]}
 
@@ -24,10 +24,10 @@ class MedusaConnector:
             "status": "published",
             "options": [
                 {
-                  "title": "Size",
-                  "values": ["S", "M", "L"]
+                    "title": "Size",
+                    "values": ["S", "M", "L"]
                 }
-              ],
+            ],
             "thumbnail": magento_product[0]["media_gallery_entries"][0]["file"]
         }
         return medusa_data

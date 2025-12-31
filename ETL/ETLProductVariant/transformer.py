@@ -1,6 +1,4 @@
-
 class TransformVariant:
-
     url_image = "http://magento.local/media/catalog/product/"
 
     def transform_image(self, product_variant):

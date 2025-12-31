@@ -1,5 +1,6 @@
 import re
 
+
 class Transformer:
     url_image = "http://magento.local/media/catalog/product/"
 
@@ -19,4 +20,3 @@ class Transformer:
         self.transform_price(product)
         self.transform_image(product)
         self.clean_html(product)
-

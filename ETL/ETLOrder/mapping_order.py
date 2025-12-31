@@ -1,6 +1,8 @@
 import json
+
 with open("key.json", "r") as f:
     config = json.load(f)
+
 
 class Mapping:
     def map_field_line_items(self, items):

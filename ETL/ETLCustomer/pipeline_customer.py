@@ -16,6 +16,7 @@ with open("Mapper/mapping_customer.yaml") as f:
 with open("Mapper/mapping_address.yaml") as f:
     mapper_address = yaml.safe_load(f)
 
+
 class PipelineCustomer:
     array_groups_existed = []
     page_size = -1
@@ -51,7 +52,6 @@ class PipelineCustomer:
                 return group[group_id_magento]
         return None
 
-
     def add_customer_to_medusa(self):
         self.add_group_to_medusa()
 
@@ -72,21 +72,18 @@ class PipelineCustomer:
                     group_id = self.groups_id_medusa(customer["group_id"])
                     if group_id is None:
                         continue
-                    response_add_customer_group = self.customer_group_medusa._request_add_customer_group(group_id, response_add_customer["customer"]["id"])
+                    response_add_customer_group = self.customer_group_medusa._request_add_customer_group(group_id,
+                                                                                                         response_add_customer[
+                                                                                                             "customer"][
+                                                                                                             "id"])
 
                     for address in customer["addresses"]:
                         customer_address_mapping = self.mapping_customer.mapping_fields_address(mapper_address, address)
                         if customer_address_mapping:
-                            response_add_customer_address = self.customer_address_medusa._request_add_customer_address(response_add_customer["customer"]["id"], customer_address_mapping)
+                            response_add_customer_address = self.customer_address_medusa._request_add_customer_address(
+                                response_add_customer["customer"]["id"], customer_address_mapping)
 
                     user_medusa = UserMedusa(self.url_medusa, self.token_medusa)
                     response_add_user = user_medusa._request_add_user(customer_medusa_mapping["email"])
                     if response_add_user:
                         response_reset_password = user_medusa._request_reset_password(customer_medusa_mapping["email"])
-
-
-
-
-
-
-

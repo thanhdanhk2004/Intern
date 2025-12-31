@@ -1,4 +1,6 @@
 import json
+
+
 def write_dql(item, reason, level="product"):
     with open("dlq.json", "a", encoding="utf-8") as f:
         f.write(json.dumps({
@@ -17,8 +19,6 @@ class Validate:
             if not product.get(field):
                 write_dql(product, f"Misssing product field {field}")
         return True
-
-
 
     def validate_quantity(self):
         if self.product["stock_quantity"] < 0:

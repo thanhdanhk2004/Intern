@@ -1,6 +1,7 @@
 import json
 import pprint
 
+
 def write_dlq(item, reason, level="order", order_id=None, line_item_id=None):
     payload = {
         "level": level,
@@ -15,6 +16,7 @@ def write_dlq(item, reason, level="order", order_id=None, line_item_id=None):
 
     with open("dlq.json", "a", encoding="utf-8") as f:
         f.write(json.dumps(payload, ensure_ascii=False) + "\n")
+
 
 class Validate:
     require_order_item_field = [

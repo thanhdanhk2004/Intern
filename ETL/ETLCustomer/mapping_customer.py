@@ -1,6 +1,4 @@
-
 class MappingCustomer:
-
 
     def mapping_fields_customer(self, mapper, customer_magento):
         customer_medusa = {}

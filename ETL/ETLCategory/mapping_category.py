@@ -1,4 +1,3 @@
-
 class MappingCategory:
 
     def get_handle(self, custom_attributes):
@@ -17,5 +16,3 @@ class MappingCategory:
             target_data[target_filed] = value
         target_data["metadata"] = {"etl_migration": True}
         return target_data
-
-    

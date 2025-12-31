@@ -3,6 +3,7 @@ from http.client import responses
 import requests
 import time
 
+
 class CustomerMagento:
     def __init__(self, base_url, token, timeout=20, retry=3):
         self.base_url = base_url
